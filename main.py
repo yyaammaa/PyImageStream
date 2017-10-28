@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import argparse
 import io
 import os
@@ -36,6 +34,8 @@ class Camera:
         self.quality = quality
         self.stopdelay = stopdelay
 
+        self.count = 0
+
     def request_start(self):
         if self.stop_requested:
             print("Camera continues to be in use")
@@ -67,7 +67,14 @@ class Camera:
         # img = self._cam.get_image()
         # imgstr = pygame.image.tostring(img, "RGB", False)
         # pimg = Image.frombytes("RGB", img.get_size(), imgstr)
-        pimg = Image.open('./tmp/vga_01.jpg', 'r')
+
+        # pimg = Image.open('./tmp/vga_01.jpg', 'r')
+
+        i = self.count
+        self.count += 1
+        file_name = './tmp/vga_0' + str((i % 7) + 1) + '.jpg'
+        pimg = Image.open(file_name, 'r')
+
         with io.BytesIO() as bytesIO:
             pimg.save(bytesIO, "JPEG", quality=self.quality, optimize=True)
             return bytesIO.getvalue()
