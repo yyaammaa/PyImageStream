@@ -74,9 +74,13 @@ class Camera:
 
         i = self.count
         self.count += 1
+
+        pimg = Image.open('./tmp/qvga.jpg', 'r')
+
         # file_name = './test/vga_0' + str((i % 7) + 1) + '.jpg'
         # pimg = Image.open(file_name, 'r')
-        pimg = self.pimgs[i % 7]
+
+        # pimg = self.pimgs[i % 7]
 
         with io.BytesIO() as bytesIO:
             pimg.save(bytesIO, "JPEG", quality=self.quality, optimize=True)
