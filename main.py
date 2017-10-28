@@ -34,7 +34,9 @@ class Camera:
         self.quality = quality
         self.stopdelay = stopdelay
 
+        #
         self.count = 0
+        self.pimgs = [Image.open('./test/vga_0' + str(i + 1) + '.jpg', 'r') for i in range(7)]
 
     def request_start(self):
         if self.stop_requested:
@@ -72,8 +74,9 @@ class Camera:
 
         i = self.count
         self.count += 1
-        file_name = './test/vga_0' + str((i % 7) + 1) + '.jpg'
-        pimg = Image.open(file_name, 'r')
+        # file_name = './test/vga_0' + str((i % 7) + 1) + '.jpg'
+        # pimg = Image.open(file_name, 'r')
+        pimg = self.pimgs[i % 7]
 
         with io.BytesIO() as bytesIO:
             pimg.save(bytesIO, "JPEG", quality=self.quality, optimize=True)
