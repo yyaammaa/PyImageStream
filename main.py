@@ -72,7 +72,7 @@ class Camera:
 
         i = self.count
         self.count += 1
-        file_name = './tmp/vga_0' + str((i % 7) + 1) + '.jpg'
+        file_name = './test/vga_0' + str((i % 7) + 1) + '.jpg'
         pimg = Image.open(file_name, 'r')
 
         with io.BytesIO() as bytesIO:
