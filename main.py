@@ -1,17 +1,16 @@
 #!/usr/bin/env python3
 
 import argparse
-import os
 import io
+import os
 
 import tornado.ioloop
 import tornado.web
 import tornado.websocket
-
 from PIL import Image
 
-import pygame.camera
-import pygame.image
+# import pygame.camera
+# import pygame.image
 
 parser = argparse.ArgumentParser(description='Start the PyImageStream server.')
 
@@ -24,13 +23,13 @@ parser.add_argument('--stopdelay', default=7, type=int, help='Delay in seconds b
                                                              'all clients have disconnected (default: 7)')
 args = parser.parse_args()
 
-class Camera:
 
+class Camera:
     def __init__(self, index, width, height, quality, stopdelay):
         print("Initializing camera...")
-        pygame.camera.init()
-        camera_name = pygame.camera.list_cameras()[index]
-        self._cam = pygame.camera.Camera(camera_name, (width, height))
+        # pygame.camera.init()
+        # camera_name = pygame.camera.list_cameras()[index]
+        # self._cam = pygame.camera.Camera(camera_name, (width, height))
         print("Camera initialized")
         self.is_started = False
         self.stop_requested = False
@@ -52,22 +51,23 @@ class Camera:
 
     def _start(self):
         print("Starting camera...")
-        self._cam.start()
+        # self._cam.start()
         print("Camera started")
         self.is_started = True
 
     def _stop(self):
         if self.stop_requested:
             print("Stopping camera now...")
-            self._cam.stop()
+            # self._cam.stop()
             print("Camera stopped")
             self.is_started = False
             self.stop_requested = False
 
     def get_jpeg_image_bytes(self):
-        img = self._cam.get_image()
-        imgstr = pygame.image.tostring(img, "RGB", False)
-        pimg = Image.frombytes("RGB", img.get_size(), imgstr)
+        # img = self._cam.get_image()
+        # imgstr = pygame.image.tostring(img, "RGB", False)
+        # pimg = Image.frombytes("RGB", img.get_size(), imgstr)
+        pimg = Image.open('./tmp/vga_01.jpg', 'r')
         with io.BytesIO() as bytesIO:
             pimg.save(bytesIO, "JPEG", quality=self.quality, optimize=True)
             return bytesIO.getvalue()
@@ -103,9 +103,9 @@ script_path = os.path.dirname(os.path.realpath(__file__))
 static_path = script_path + '/static/'
 
 app = tornado.web.Application([
-        (r"/websocket", ImageWebSocket),
-        (r"/(.*)", tornado.web.StaticFileHandler, {'path': static_path, 'default_filename': 'index.html'}),
-    ])
+    (r"/websocket", ImageWebSocket),
+    (r"/(.*)", tornado.web.StaticFileHandler, {'path': static_path, 'default_filename': 'index.html'}),
+])
 app.listen(args.port)
 
 print("Starting server: http://localhost:" + str(args.port) + "/")
