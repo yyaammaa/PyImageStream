@@ -75,7 +75,7 @@ class Camera:
         i = self.count
         self.count += 1
 
-        pimg = Image.open('./tmp/qvga.jpg', 'r')
+        pimg = Image.open('./test/qvga.jpg', 'r')
 
         # file_name = './test/vga_0' + str((i % 7) + 1) + '.jpg'
         # pimg = Image.open(file_name, 'r')
