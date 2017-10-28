@@ -2,7 +2,7 @@ var img = document.getElementById("liveImg");
 var fpsText = document.getElementById("fps");
 
 //var target_fps = 24;
-var target_fps = 120;
+var target_fps = 30;
 
 var request_start_time = performance.now();
 var start_time = performance.now();
